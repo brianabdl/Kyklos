@@ -1,0 +1,126 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@theme {
+    --font-sans: 'Roboto', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-display: 'Architects Daughter', cursive;
+    --font-mono: 'Courier New', ui-monospace, monospace;
+
+    --color-paper: #faf8f3;
+    --color-ink: #1a1a1a;
+    --color-accent: #d97757;
+}
+
+@layer base {
+    body {
+        background-color: var(--color-paper);
+        color: var(--color-ink);
+    }
+}
+
+@layer components {
+    .k-card {
+        border: 1.4px solid var(--color-ink);
+        border-radius: 10px;
+        background-color: var(--color-paper);
+    }
+
+    .k-card-accent {
+        border: 1.4px solid var(--color-accent);
+        border-radius: 10px;
+        background-color: oklch(from var(--color-accent) l c h / 13%);
+    }
+
+    .k-shadow {
+        box-shadow: 2px 2px 0 var(--color-ink);
+    }
+
+    .k-btn {
+        font-family: var(--font-display);
+        border: 1.6px solid var(--color-ink);
+        border-radius: 12px;
+        box-shadow: 2px 2px 0 var(--color-ink);
+        padding: 9px 14px;
+        background: transparent;
+        color: var(--color-ink);
+        cursor: pointer;
+        transition: transform 0.05s, box-shadow 0.05s;
+        display: inline-block;
+        text-align: center;
+    }
+
+    .k-btn:active {
+        transform: translate(2px, 2px);
+        box-shadow: none;
+    }
+
+    .k-btn-accent {
+        background-color: var(--color-accent);
+        border-color: var(--color-accent);
+        color: var(--color-paper);
+        box-shadow: 2px 2px 0 var(--color-ink);
+    }
+
+    .k-pill {
+        font-family: var(--font-sans);
+        border: 1.3px solid var(--color-ink);
+        border-radius: 999px;
+        padding: 2px 10px;
+        font-size: 12px;
+        display: inline-block;
+    }
+
+    .k-pill-accent {
+        border-color: var(--color-accent);
+        background-color: oklch(from var(--color-accent) l c h / 13%);
+        color: var(--color-accent);
+    }
+
+    .k-pill-muted {
+        border-color: color-mix(in srgb, var(--color-ink) 33%, transparent);
+        color: color-mix(in srgb, var(--color-ink) 60%, transparent);
+    }
+
+    .k-input {
+        border: none;
+        border-bottom: 1.4px solid var(--color-ink);
+        background: transparent;
+        padding: 8px 4px;
+        font-family: var(--font-sans);
+        font-size: 14px;
+        color: var(--color-ink);
+        width: 100%;
+        outline: none;
+    }
+
+    .k-input:focus {
+        border-bottom-color: var(--color-accent);
+    }
+
+    .k-nav-link {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 16px;
+        font-family: var(--font-display);
+        font-size: 14px;
+        color: color-mix(in srgb, var(--color-ink) 55%, transparent);
+        border-left: 3px solid transparent;
+        text-decoration: none;
+        transition: color 0.1s, border-color 0.1s;
+    }
+
+    .k-nav-link:hover {
+        color: var(--color-ink);
+    }
+
+    .k-nav-link.active {
+        color: var(--color-accent);
+        border-left-color: var(--color-accent);
+    }
+}
