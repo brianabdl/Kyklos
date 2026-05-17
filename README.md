@@ -37,6 +37,60 @@ Each organization's data is fully separated — employees and managers of one co
 
 ---
 
+## Getting Started
+
+### Prerequisites
+
+Before setting up the project, make sure you have the following installed on your machine:
+
+- **PHP 8.3 or higher**
+- **Composer** (PHP dependency manager)
+- **Node.js & npm** (for frontend assets)
+
+### Installation
+
+```bash
+# 1. Clone the repository
+git clone https://github.com/brianabdl/kyklos-backend.git
+cd kyklos-backend
+
+# 2. Run the one-command setup
+#    (installs dependencies, creates the database, and generates an app key)
+composer setup
+
+# 3. Start the development server
+composer dev
+
+# 4. In a separate terminal, start the Reverb & Queue workers
+php artisan reverb:start
+php artisan queue:work
+```
+
+The app will be available at `http://localhost:8000`.
+
+### Configuration
+
+The `.env.example` file includes sensible defaults for local development. The only values you need to set before starting are the Reverb credentials, which power real-time push notifications:
+
+```env
+REVERB_APP_ID=your-app-id
+REVERB_APP_KEY=your-app-key
+REVERB_APP_SECRET=your-app-secret
+```
+
+### Demo Accounts
+
+After setup, the database is pre-loaded with demo accounts you can use to explore the system:
+
+| Role | Email | Password |
+|---|---|---|
+| Manager | manager@demo.co | password |
+| Employee | employee@demo.co | password |
+
+> PIN for all demo accounts: **1234**
+
+---
+
 ## Who It's For
 
 Kyklos is built for organizations of any size that need a straightforward, reliable way to track employee attendance — whether it's a single site or multiple locations with different teams.
