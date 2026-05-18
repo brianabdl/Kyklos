@@ -84,7 +84,7 @@
                 <div class="text-2xl mb-3">🔔</div>
                 <h3 class="font-display text-lg mb-2">Push Notifications</h3>
                 <p class="text-sm" style="color: rgba(26,26,26,0.6); line-height: 1.6;">
-                    Firebase-powered alerts keep employees and managers informed about
+                    Alerts keep employees and managers informed about
                     shift changes, approvals, and reminders.
                 </p>
             </div>
@@ -99,13 +99,12 @@
             </div>
 
             <div class="k-card k-shadow p-6">
-                <div class="text-2xl mb-3">🔐</div>
-                <h3 class="font-display text-lg mb-2">2FA + OAuth</h3>
+                <div class="text-2xl mb-3">🔒</div>
+                <h3 class="font-display text-lg mb-2">Secure & Reliable</h3>
                 <p class="text-sm" style="color: rgba(26,26,26,0.6); line-height: 1.6;">
-                    PIN-based two-factor auth and Google / Apple sign-in keep
-                    accounts secure without friction.
+                    Built with Laravel and Firebase, Kyklos ensures your data is safe,
+                    secure, and always available when you need it.
                 </p>
-            </div>
 
         </div>
     </section>
