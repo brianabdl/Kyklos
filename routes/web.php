@@ -17,6 +17,8 @@ Route::prefix('employee')->name('employee.')->group(function () {
     Route::get('login',  [EmployeeLoginController::class, 'show'])->name('login');
     Route::post('login', [EmployeeLoginController::class, 'login'])->name('login.submit');
     Route::post('logout',[EmployeeLoginController::class, 'logout'])->name('logout');
+    Route::get('pin',    [EmployeeLoginController::class, 'showPin'])->name('pin');
+    Route::post('pin',   [EmployeeLoginController::class, 'verifyPin'])->name('pin.submit');
 
     Route::middleware(['web.employee', 'org.isolation'])->group(function () {
         Route::get('/',             [EmployeePunchController::class, 'index'])->name('clock');
@@ -32,9 +34,11 @@ Route::prefix('employee')->name('employee.')->group(function () {
 
 
 Route::prefix('dashboard')->name('dashboard.')->group(function () {
-    Route::get('login', [LoginController::class, 'show'])->name('login');
+    Route::get('login',  [LoginController::class, 'show'])->name('login');
     Route::post('login', [LoginController::class, 'login'])->name('login.submit');
-    Route::post('logout', [LoginController::class, 'logout'])->name('logout');
+    Route::post('logout',[LoginController::class, 'logout'])->name('logout');
+    Route::get('pin',    [LoginController::class, 'showPin'])->name('pin');
+    Route::post('pin',   [LoginController::class, 'verifyPin'])->name('pin.submit');
 
     Route::middleware('web.manager')->group(function () {
         Route::get('/', [OverviewController::class, 'index'])->name('overview');
