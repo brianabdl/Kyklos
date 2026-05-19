@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Site;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class TeamWebController extends Controller
 {
@@ -52,6 +53,8 @@ class TeamWebController extends Controller
             return (object) [
                 'id'         => $user->id,
                 'name'       => $user->full_name,
+                'email'      => $user->email,
+                'role'       => $user->role,
                 'site'       => $session?->site?->name,
                 'status'     => $statusLabel,
                 'clockedInAt'=> $clockedInAt,
@@ -66,5 +69,58 @@ class TeamWebController extends Controller
         $sites = Site::where('org_id', $orgId)->orderBy('name')->get();
 
         return view('dashboard.team', compact('employees', 'date', 'search', 'status', 'sites', 'siteId'));
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'full_name' => 'required|string|max:255',
+            'email'     => 'required|email|unique:users,email',
+            'password'  => 'required|string|min:8',
+            'role'      => 'sometimes|in:employee,manager',
+        ]);
+
+        User::create([
+            'org_id'        => auth()->user()->org_id,
+            'full_name'     => $request->full_name,
+            'email'         => $request->email,
+            'role'          => $request->input('role', 'employee'),
+            'password_hash' => Hash::make($request->password),
+            'is_active'     => true,
+        ]);
+
+        return redirect()->route('dashboard.team')->with('success', 'Employee added.');
+    }
+
+    public function update(Request $request, string $id)
+    {
+        $request->validate([
+            'full_name' => 'required|string|max:255',
+            'email'     => 'required|email|unique:users,email,'. $id,
+            'role'      => 'required|in:employee,manager',
+        ]);
+
+        $user = User::where('id', $id)->where('org_id', auth()->user()->org_id)->firstOrFail();
+        $user->update($request->only('full_name', 'email', 'role'));
+
+        return redirect()->route('dashboard.team')->with('success', 'Employee updated.');
+    }
+
+    public function deactivate(Request $request, string $id)
+    {
+        $user = User::where('id', $id)->where('org_id', auth()->user()->org_id)->firstOrFail();
+        $user->update(['is_active' => false]);
+
+        return redirect()->route('dashboard.team')->with('success', 'Employee deactivated.');
+    }
+
+    public function resetPin(Request $request, string $id)
+    {
+        $request->validate(['new_pin' => 'required|digits:4']);
+
+        $user = User::where('id', $id)->where('org_id', auth()->user()->org_id)->firstOrFail();
+        $user->update(['pin_hash' => Hash::make($request->new_pin)]);
+
+        return redirect()->route('dashboard.team')->with('success', 'PIN reset successfully.');
     }
 }

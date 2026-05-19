@@ -12,7 +12,7 @@
 <body class="bg-paper text-ink flex h-screen overflow-hidden">
 
     {{-- Sidebar --}}
-    <aside class="w-56 flex-shrink-0 flex flex-col border-r border-ink bg-paper">
+    <aside class="w-56 shrink-0 flex flex-col border-r border-ink bg-paper">
         {{-- Logo --}}
         <div class="px-6 py-6 border-b border-ink">
             <div class="font-display text-2xl text-ink leading-none">Kyklos</div>
@@ -43,6 +43,11 @@
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
                 Logs
             </a>
+            <a href="{{ route('dashboard.sites') }}"
+               class="k-nav-link {{ request()->routeIs('dashboard.sites') ? 'active' : '' }}">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                Sites
+            </a>
         </nav>
 
         {{-- Manager + Logout --}}
@@ -72,6 +77,22 @@
 
         {{-- Scrollable content --}}
         <div class="flex-1 overflow-y-auto px-8 py-6">
+            @if (session('success'))
+                <div class="mb-5 px-4 py-3 rounded text-sm font-semibold"
+                     style="background: oklch(from var(--color-accent) l c h / 12%); border: 1px solid oklch(from var(--color-accent) l c h / 30%); color: var(--color-ink);">
+                    {{ session('success') }}
+                </div>
+            @endif
+            @if ($errors->any())
+                <div class="mb-5 px-4 py-3 rounded text-sm"
+                     style="background: oklch(55% 0.18 25 / 10%); border: 1px solid oklch(55% 0.18 25 / 30%); color: var(--color-ink);">
+                    <ul class="list-disc list-inside space-y-1">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             @yield('content')
         </div>
     </main>

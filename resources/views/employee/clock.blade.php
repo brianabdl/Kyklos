@@ -228,6 +228,7 @@ function formatElapsed(startIso) {
                 document.getElementById('lng').value = pos.coords.longitude;
                 status.textContent = `Location captured (±${Math.round(pos.coords.accuracy)} m)`;
                 status.style.color = '#16a34a';
+                console.log('GPS position:', pos.coords.latitude, pos.coords.longitude, `(accuracy: ${pos.coords.accuracy} m)`);
             },
             err => {
                 status.textContent = `Location failed: ${err.message}`;

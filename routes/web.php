@@ -8,6 +8,7 @@ use App\Http\Controllers\Web\LoginController;
 use App\Http\Controllers\Web\LogsWebController;
 use App\Http\Controllers\Web\OverviewController;
 use App\Http\Controllers\Web\ShiftsWebController;
+use App\Http\Controllers\Web\SitesWebController;
 use App\Http\Controllers\Web\TeamWebController;
 use Illuminate\Support\Facades\Route;
 
@@ -42,8 +43,25 @@ Route::prefix('dashboard')->name('dashboard.')->group(function () {
 
     Route::middleware('web.manager')->group(function () {
         Route::get('/', [OverviewController::class, 'index'])->name('overview');
+
         Route::get('team', [TeamWebController::class, 'index'])->name('team');
+        Route::post('team', [TeamWebController::class, 'store'])->name('team.store');
+        Route::patch('team/{id}', [TeamWebController::class, 'update'])->name('team.update');
+        Route::delete('team/{id}', [TeamWebController::class, 'deactivate'])->name('team.deactivate');
+        Route::post('team/{id}/reset-pin', [TeamWebController::class, 'resetPin'])->name('team.reset-pin');
+
         Route::get('shifts', [ShiftsWebController::class, 'index'])->name('shifts');
+        Route::post('shifts', [ShiftsWebController::class, 'store'])->name('shifts.store');
+        Route::patch('shifts/{id}', [ShiftsWebController::class, 'update'])->name('shifts.update');
+        Route::delete('shifts/{id}', [ShiftsWebController::class, 'destroy'])->name('shifts.destroy');
+
         Route::get('logs', [LogsWebController::class, 'index'])->name('logs');
+        Route::post('logs/adjust', [LogsWebController::class, 'manualAdj'])->name('logs.adjust');
+        Route::delete('logs/sessions/{id}', [LogsWebController::class, 'voidSession'])->name('logs.void');
+
+        Route::get('sites', [SitesWebController::class, 'index'])->name('sites');
+        Route::post('sites', [SitesWebController::class, 'store'])->name('sites.store');
+        Route::patch('sites/{id}', [SitesWebController::class, 'update'])->name('sites.update');
+        Route::delete('sites/{id}', [SitesWebController::class, 'destroy'])->name('sites.destroy');
     });
 });
